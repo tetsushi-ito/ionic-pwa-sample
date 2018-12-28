@@ -34,5 +34,9 @@
     "@ionic/app-scripts": "3.2.1",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "config": {
+    "ionic_source_map_type": "source-map",
+    "ionic_webpack": "./webpack.config.js"
+  }
 }

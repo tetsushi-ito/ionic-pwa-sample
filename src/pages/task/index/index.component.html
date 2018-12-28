@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>ToDo</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item
+            *ngFor="let task of tasks"
+            (click)="onTaskClicked(task)">
+      <ion-label>{{task.title}}</ion-label>
+    </button>
+  </ion-list>
+</ion-content>
