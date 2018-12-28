@@ -22,6 +22,7 @@ export class IndexPageComponent {
       new Task(3, 'Ruby勉強', 'mapとselectを使えるようになる'),
       new Task(4, 'PHP勉強', 'WP_Queryを使いこなせるようにする'),
       new Task(5, 'React勉強', 'stateとpropsの違いを理解する'),
+      new Task(6, 'Angular勉強', 'NgModuleを設定する'),
     ];
   }
 
