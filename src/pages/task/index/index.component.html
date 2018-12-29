@@ -1,10 +1,17 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>ToDo</ion-title>
-  </ion-navbar>
+  <ion-toolbar no-border-top>
+    <ion-title>ToDoリスト</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="onRefresherActivated($event)">
+    <ion-refresher-content pullingText="ひっぱって更新"
+                           refreshingSpinner="circles"
+                           refreshingText="読み込み中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <button ion-item
             *ngFor="let task of tasks"
@@ -12,4 +19,12 @@
       <ion-label>{{task.title}}</ion-label>
     </button>
   </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab
+            color="primary"
+            (click)="onAddButtonClicked()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

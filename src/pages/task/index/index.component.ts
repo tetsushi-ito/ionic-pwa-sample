@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { LoadingController, NavController } from 'ionic-angular';
 import { Task } from '@models/task.model';
+import { TaskService } from '@services/task.service';
+import { NewPageComponent } from '../new/new.component';
 import { ShowPageComponent } from '../show/show.component';
 
 @Component({
@@ -12,21 +14,44 @@ export class IndexPageComponent {
   tasks: Task[] = [];
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private loadingCtrl: LoadingController,
+    private taskService: TaskService,
   ) {}
 
   ionViewWillEnter() {
-    this.tasks = [
-      new Task(1, 'JavaScript勉強', 'letとconstの違いを学ぶ'),
-      new Task(2, 'TypeScript勉強', 'interfaceの定義方法を学ぶ'),
-      new Task(3, 'Ruby勉強', 'mapとselectを使えるようになる'),
-      new Task(4, 'PHP勉強', 'WP_Queryを使いこなせるようにする'),
-      new Task(5, 'React勉強', 'stateとpropsの違いを理解する'),
-      new Task(6, 'Angular勉強', 'NgModuleを設定する'),
-    ];
+    const loading = this.loadingCtrl.create({
+      content: 'タスクを読み込み中...',
+    });
+
+    loading.present();
+
+    this.loadData().then(() => {
+      loading.dismiss();
+    }, () => {
+      loading.dismiss();
+    });
+  }
+
+  onAddButtonClicked() {
+    this.navCtrl.push(NewPageComponent, {}, { animation: 'md-transition' });
   }
 
   onTaskClicked(task: Task) {
     this.navCtrl.push(ShowPageComponent, { task: task });
+  }
+
+  onRefresherActivated(event: any) {
+    this.loadData().then(() => {
+      event.complete();
+    }, () => {
+      event.complete();
+    });
+  }
+
+  private loadData(): Promise<any> {
+    return this.taskService.loadTasks().then(tasks => {
+      this.tasks = tasks;
+    });
   }
 }
